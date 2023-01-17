@@ -1,0 +1,23 @@
+package rules
+
+import com.javainuse.model.Triage
+import com.javainuse.model.Block
+
+rule "1"
+    when  
+        $triageObj: Triage($blocks: blocks); 
+        $block: Block(blockName == "Block 2", question == "Business Merger", answer== "Internal") || Block(blockName == "Block 2", question == "aquisition integration (M&A)", answer== "External") from $blocks;
+    then  
+        $triageObj.setDecision("Change to Existing Business(CEB)");
+    end  
+
+rule "2"
+    when  
+        $triageObj: Triage($blocks: blocks); 
+        $block: Block(blockName == "Block 2", question == "Equity investment", answer== "Applicable") || Block(blockName == "Block 2", question == "Equity divestment", answer== "Applicable") from $blocks;
+    then  
+        $triageObj.setDecision("Equity holiding");
+    end
+
+  
+ 
